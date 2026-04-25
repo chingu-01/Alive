@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Attenova</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Attenova</h1>
+            <p class="subtitle">Parent & Child Tab Tracker</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Mode</div>
+            <div class="mode-selector" role="tablist" aria-label="Attenova mode">
+                <button id="parentModeBtn" class="mode-btn" type="button">Parent Mode</button>
+                <button id="childModeBtn" class="mode-btn active" type="button">Child Mode</button>
+            </div>
+            <p class="help-text" id="modeHelp">Parent Mode requires the parent password.</p>
+        </div>
+
+        <div id="parentView" class="hidden">
+            <div class="section">
+                <div class="section-title">Tab Limit</div>
+                <div class="tab-limit-container">
+                    <button id="decreaseLimit" class="btn-sm" type="button" aria-label="Decrease tab limit">-</button>
+                    <input type="number" id="tabLimitInput" min="1" max="20" value="4">
+                    <button id="increaseLimit" class="btn-sm" type="button" aria-label="Increase tab limit">+</button>
+                </div>
+                <p class="help-text" id="tabLimitHelp">Maximum 4 tabs allowed</p>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Parent Recovery Email</div>
+                <div class="email-row">
+                    <input type="email" id="recoveryEmailInput" class="email-input" autocomplete="email" placeholder="parent@example.com">
+                    <button id="saveRecoveryEmailBtn" class="save-email-btn" type="button">Save</button>
+                </div>
+                <p class="help-text" id="recoveryEmailStatus">Used only for forgot password OTP.</p>
+            </div>
+
+            <div class="section" id="otpRecoverySection">
+                <div class="section-title">Password Recovery via OTP</div>
+                <p class="help-text">If you forget your parent password, request an OTP to reset it.</p>
+                <div id="otpRecoveryContent">
+                    <button id="requestOtpBtn" class="btn-full" type="button">Request OTP to Reset Password</button>
+                </div>
+                <div id="otpEntryContent" class="hidden">
+                    <div id="demoOtpDisplay" class="demo-otp-box hidden">
+                        <div class="demo-label">📝 Demo OTP Code:</div>
+                        <div class="demo-code" id="demoOtpCode">1234</div>
+                        <p class="help-text" style="margin-top: 8px;">Enter this code below to proceed with password reset.</p>
+                    </div>
+                    <input type="text" id="recoveryOtpInput" class="password-input" inputmode="numeric" maxlength="4" placeholder="Enter 4-digit OTP">
+                    <div class="modal-error" id="otpError" aria-live="polite"></div>
+                    <div style="display: flex; gap: 8px; margin-top: 10px;">
+                        <button id="verifyOtpBtn" class="modal-btn primary" type="button">Verify OTP</button>
+                        <button id="cancelOtpBtn" class="modal-btn secondary" type="button">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Activity Stats</div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">Tab Switches</div>
+                        <div class="stat-value" id="tabSwitchCount">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Open Tabs</div>
+                        <div class="stat-value" id="openTabCount">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Tabs Opened</div>
+                        <div class="stat-value" id="tabsOpenedCount">0</div>
+                    </div>
+                </div>
+                <div class="stats-grid single-row">
+                    <div class="stat-item">
+                        <div class="stat-label">Sites Visited</div>
+                        <div class="stat-value" id="sitesVisitedCount">0</div>
+                    </div>
+                    <div class="stats-grid two-items"></div>
+                    <div class="stat-item">
+                        <div class="stat-label">Limit</div>
+                        <div class="stat-value" id="parentLimitValue">4</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Extra Tabs</div>
+                        <div class="stat-value" id="extraTabsCount">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Open Tabs</div>
+                <div id="tabLimitWarning" class="warning-box" style="display: none;">
+                    <div class="warning-icon">!</div>
+                    <div>
+                        <div class="warning-title">Tab Limit Exceeded</div>
+                        <div class="warning-extra-tab" id="extraTabMessage">Extra tabs are open.</div>
+                    </div>
+                </div>
+                <div id="openTabsList">
+                    <div class="empty-state">No tabs open</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Tabs Opened History</div>
+                <div id="tabOpenHistoryContainer">
+                    <div class="empty-state">No tab opening data yet</div>
+              
+                </div>
+            </div>
+        </div>
+
+        <div id="childView" class="hidden">
+            <div class="section child-status-section">
+                <div class="child-status-card" id="childStatusCard">
+                    <div class="child-status-label">Current Status</div>
+                    <div class="child-status-title" id="childStatusTitle">Within tab limit</div>
+                    <div class="child-status-detail" id="childStatusDetail">0 of 4 tabs open</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Parent Limit</div>
+                <div class="limit-meter">
+                    <div>
+                        <div class="meter-value" id="childOpenTabs">0</div>
+                        <div class="meter-label">Open tabs</div>
+                    </div>
+                    <div class="meter-divider">/</div>
+                    <div>
+                        <div class="meter-value" id="childTabLimit">4</div>
+                        <div class="meter-label">Allowed</div>
+                    </div>
+                </div>
+                <p class="help-text">Close extra tabs when the warning appears.</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Stay focused. Stay productive.</p>
+        </div>
+    </div>
+ <div id="passwordModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="passwordModalTitle">
+        <div class="modal">
+            <div class="modal-title" id="passwordModalTitle">Parent Login</div>
+            <p class="modal-help" id="passwordModalHelp">Enter the parent password to unlock Parent Mode.</p>
+            <input type="password" id="parentPasswordInput" class="password-input" autocomplete="current-password" placeholder="Parent password">
+            <input type="password" id="confirmParentPasswordInput" class="password-input hidden" autocomplete="new-password" placeholder="Confirm password">
+            <input type="email" id="parentEmailInput" class="password-input hidden" autocomplete="email" placeholder="Parent email">
+            <input type="text" id="otpInput" class="password-input hidden" autocomplete="one-time-code" inputmode="numeric" maxlength="6" placeholder="Enter OTP">
+            <div class="modal-error" id="passwordError" aria-live="polite"></div>
+            <button id="forgotPasswordBtn" class="link-btn hidden" type="button">Forgot password?</button>
+            <div class="modal-actions">
+                <button id="cancelPasswordBtn" class="modal-btn secondary" type="button">Cancel</button>
+                <button id="submitPasswordBtn" class="modal-btn primary" type="button">Unlock</button>
+            </div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

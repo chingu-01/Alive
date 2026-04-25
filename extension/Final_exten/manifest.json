@@ -1,0 +1,27 @@
+{
+     "manifest_version": 3,
+  "name": "Attenova",
+  "version": "1.3.0",
+  "description": "Parent password protected tab tracking with child tab limit warnings and OTP reset",
+  "permissions": [
+    "tabs",
+    "storage",
+    "notifications",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+     "<all_urls>",
+    "https://api.emailjs.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://api.emailjs.com;"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Attenova - Parent & Child Mode",
+    "default_popup": "popup.html"
+  }
+}

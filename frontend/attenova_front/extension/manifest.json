@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Attenova Focus Hub",
+  "version": "1.0.0",
+  "description": "Companion extension for Attenova. Tracks focus activity and blocks distractions.",
+  "permissions": [
+    "tabs",
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

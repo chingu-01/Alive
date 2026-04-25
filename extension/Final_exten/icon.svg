@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Attenova">
+  <rect width="128" height="128" rx="24" fill="#335c81"/>
+  <path d="M24 88h80" stroke="#ffffff" stroke-width="8" stroke-linecap="round" opacity="0.9"/>
+  <path d="M36 72V44h16v28H36zm20 0V28h16v44H56zm20 0V52h16v20H76z" fill="#ffffff"/>
+  <circle cx="92" cy="36" r="18" fill="#bf4f2f"/>
+  <path d="M92 24v14" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="92" cy="48" r="3.5" fill="#ffffff"/>
+</svg>

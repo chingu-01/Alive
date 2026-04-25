@@ -1,0 +1,68 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and streak information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "currentStreak": { "type": "number" },
+        "lastSessionDate": { "type": "string", "format": "date" },
+        "totalFocusMinutes": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Session": {
+      "title": "Focus Session",
+      "description": "Details of a completed focus session",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "quote": { "type": "string" },
+        "plannedDuration": { "type": "number" },
+        "actualDuration": { "type": "number" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "endTime": { "type": "string", "format": "date-time" },
+        "averageScore": { "type": "number" },
+        "productiveMinutes": { "type": "number" },
+        "distractedMinutes": { "type": "number" },
+        "idleMinutes": { "type": "number" },
+        "tabSwitches": { "type": "number" },
+        "classification": { "type": "string", "enum": ["Superb", "Good", "Fair", "Distracted"] },
+        "silentMode": { "type": "boolean" }
+      },
+      "required": ["userId", "startTime"]
+    },
+    "MonthlyStats": {
+      "title": "Monthly Statistics",
+      "description": "Aggregated stats for the monthly report",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "month": { "type": "string" },
+        "totalTime": { "type": "number" },
+        "avgScore": { "type": "number" },
+        "bestDay": { "type": "string" },
+        "worstDay": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "sessions/{sessionId}": {
+      "schema": "Session",
+      "description": "Individual focus sessions"
+    },
+    "users/{userId}/stats/monthly": {
+      "schema": "MonthlyStats",
+      "description": "User-specific monthly aggregations"
+    }
+  }
+}
